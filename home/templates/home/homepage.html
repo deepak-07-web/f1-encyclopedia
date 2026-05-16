@@ -1,0 +1,408 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 Encyclopedia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #111111;
+            color: #ffffff;
+        }
+        .navbar {
+            background-color: #e10600;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+        .navbar h1 {
+            color: white;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 5px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #1a1a1a;
+            border: 1px solid #e10600;
+            border-radius: 8px;
+            padding: 10px 0;
+            min-width: 200px;
+            z-index: 1000;
+        }
+        .menu.active {
+            display: block;
+        }
+        .menu a {
+            display: block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid transparent;
+        }
+        .menu a:hover {
+            background-color: #222222;
+            border-left: 3px solid #e10600;
+            color: #e10600;
+        }
+        .menu .divider {
+            height: 1px;
+            background-color: #333333;
+            margin: 5px 0;
+        }
+        /* Hero with background image */
+        .hero {
+            position: relative;
+            padding: 120px 50px;
+            text-align: center;
+            border-bottom: 3px solid #e10600;
+            background-image: url('/static/images/hero.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* Dark overlay so text is readable */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+        /* Text above overlay */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content h2 {
+            font-size: 72px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: white;
+        }
+        .hero-content h2 span {
+            color: #e10600;
+        }
+        .hero-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .hero-buttons a {
+            padding: 14px 35px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .btn-primary {
+            background-color: #e10600;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #ff1a0e;
+        }
+        .btn-secondary {
+            border: 2px solid white;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: white;
+            color: #111111;
+        }
+        /* Nav Cards */
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 50px 30px;
+            background-color: #111111;
+        }
+        .nav-card {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 25px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            border-top: 3px solid #e10600;
+            transition: transform 0.2s;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            background-color: #222222;
+        }
+        .nav-card .title {
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #e10600;
+        }
+        .nav-card .desc {
+            font-size: 11px;
+            color: #aaaaaa;
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+        /* Sections */
+        .section {
+            padding: 50px 30px;
+        }
+        .section:nth-child(even) {
+            background-color: #1a1a1a;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 4px solid #e10600;
+            padding-left: 12px;
+            color: #e10600;
+        }
+        .section-header a {
+            color: #e10600;
+            text-decoration: none;
+            font-size: 14px;
+            border: 1px solid #e10600;
+            padding: 6px 14px;
+            border-radius: 4px;
+        }
+        .section-header a:hover {
+            background-color: #e10600;
+            color: white;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .driver-card {
+            background-color: #222222;
+            border-radius: 10px;
+            overflow: hidden;
+            border-top: 3px solid #e10600;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+        }
+        .driver-card:hover { transform: translateY(-5px); }
+        .driver-card img { width: 100%; height: 180px; object-fit: cover; }
+        .no-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #333333, #2d0000);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+        .card-info { padding: 15px; }
+        .card-info .number { font-size: 24px; font-weight: 900; color: #e10600; }
+        .card-info .name { font-size: 16px; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+        .card-info .detail { font-size: 12px; color: #aaaaaa; margin-top: 4px; }
+        .team-card {
+            background-color: #222222;
+            border-radius: 10px;
+            overflow: hidden;
+            border-top: 3px solid #e10600;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+        }
+        .team-card:hover { transform: translateY(-5px); }
+        .team-card img { width: 100%; height: 180px; object-fit: cover; }
+        .footer {
+            background-color: #e10600;
+            padding: 20px 30px;
+            text-align: center;
+            color: white;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>🏎️ F1 ENCYCLOPEDIA</h1>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu" id="menu">
+            <a href="/">🏠 Home</a>
+            <div class="divider"></div>
+            <a href="/drivers/">Drivers</a>
+            <a href="/teams/">Teams</a>
+            <a href="/circuits/">Circuits</a>
+            <a href="/seasons/">Seasons</a>
+            <div class="divider"></div>
+            <a href="/records/">Records</a>
+            <a href="/glossary/">Glossary</a>
+            <a href="/halloffame/">Hall of Fame</a>
+            <a href="/tyres/">Tyres</a>
+            <div class="divider"></div>
+            <a href="/admin">Admin</a>
+        </div>
+    </div>
+
+    <!-- Hero with background image -->
+    <div class="hero">
+        <div class="hero-content">
+            <h2>F1 <span>Encyclopedia</span></h2>
+            <div class="hero-buttons">
+                <a href="/drivers/" class="btn-primary">Explore Drivers</a>
+                <a href="/teams/" class="btn-secondary">Explore Teams</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="nav-cards">
+        <a href="/drivers/" class="nav-card">
+            <div class="title">Drivers</div>
+            <div class="desc">All F1 drivers profiles</div>
+        </a>
+        <a href="/teams/" class="nav-card">
+            <div class="title">Teams</div>
+            <div class="desc">All constructors</div>
+        </a>
+        <a href="/circuits/" class="nav-card">
+            <div class="title">Circuits</div>
+            <div class="desc">All F1 tracks</div>
+        </a>
+        <a href="/seasons/" class="nav-card">
+            <div class="title">Seasons</div>
+            <div class="desc">Championship history</div>
+        </a>
+        <a href="/records/" class="nav-card">
+            <div class="title">Records</div>
+            <div class="desc">All time F1 records</div>
+        </a>
+        <a href="/glossary/" class="nav-card">
+            <div class="title">Glossary</div>
+            <div class="desc">F1 terms explained</div>
+        </a>
+        <a href="/halloffame/" class="nav-card">
+            <div class="title">Hall of Fame</div>
+            <div class="desc">F1 legends</div>
+        </a>
+        <a href="/tyres/" class="nav-card">
+            <div class="title">Tyres</div>
+            <div class="desc">Pirelli tyre compounds</div>
+        </a>
+    </div>
+
+    <!-- Featured Drivers -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Featured Drivers</h2>
+            <a href="/drivers/">View All →</a>
+        </div>
+        <div class="cards-grid">
+            {% for driver in drivers %}
+            <a href="/drivers/{{ driver.pk }}/" class="driver-card">
+                {% if driver.image %}
+                <img src="{{ driver.image.url }}" alt="{{ driver.name }}">
+                {% else %}
+                <div class="no-image">🏎️</div>
+                {% endif %}
+                <div class="card-info">
+                    <div class="number">#{{ driver.driver_number }}</div>
+                    <div class="name">{{ driver.name }}</div>
+                    <div class="detail">{{ driver.championships }} Championships</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Featured Teams -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Featured Teams</h2>
+            <a href="/teams/">View All →</a>
+        </div>
+        <div class="cards-grid">
+            {% for team in teams %}
+            <a href="/teams/{{ team.pk }}/" class="team-card" style="border-top: 3px solid {{ team.team_color }};">
+                {% if team.car_image %}
+                <img src="{{ team.car_image.url }}" alt="{{ team.name }}">
+                {% else %}
+                <div class="no-image">🏎️</div>
+                {% endif %}
+                <div class="card-info">
+                    <div class="name" style="color: {{ team.team_color }};">{{ team.name }}</div>
+                    <div class="detail">{{ team.championships }} Championships</div>
+                    <div class="detail">{{ team.base }}</div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        F1 ENCYCLOPEDIA — ALL RIGHTS RESERVED
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>

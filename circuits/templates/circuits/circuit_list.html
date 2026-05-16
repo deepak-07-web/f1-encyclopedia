@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 Circuits | F1 Encyclopedia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #111111; color: #ffffff; }
+        .navbar { background-color: #e10600; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+        .navbar-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn { color: white; text-decoration: none; font-size: 22px; }
+        .back-btn:hover { opacity: 0.7; }
+        .navbar h1 { color: white; font-size: 24px; letter-spacing: 2px; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 5px; }
+        .hamburger span { display: block; width: 25px; height: 3px; background-color: white; border-radius: 3px; }
+        .menu { display: none; position: absolute; top: 60px; right: 20px; background-color: #1a1a1a; border: 1px solid #e10600; border-radius: 8px; padding: 10px 0; min-width: 200px; z-index: 1000; }
+        .menu.active { display: block; }
+        .menu a { display: block; padding: 10px 20px; color: white; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-left: 3px solid transparent; }
+        .menu a:hover { background-color: #222222; border-left: 3px solid #e10600; color: #e10600; }
+        .menu .divider { height: 1px; background-color: #333333; margin: 5px 0; }
+        .page-header { background: linear-gradient(135deg, #1a1a1a, #2d0000); padding: 40px 30px; border-bottom: 3px solid #e10600; }
+        .page-header h2 { font-size: 36px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+        .page-header p { color: #aaaaaa; margin-top: 8px; font-size: 14px; letter-spacing: 1px; }
+        .circuits-section { padding: 40px 30px; }
+        .circuits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .circuit-card { background-color: #1a1a1a; border-radius: 10px; overflow: hidden; border-top: 3px solid #e10600; transition: transform 0.2s; text-decoration: none; color: white; }
+        .circuit-card:hover { transform: translateY(-5px); }
+        .circuit-card img { width: 100%; height: 200px; object-fit: cover; }
+        .no-image { width: 100%; height: 200px; background: linear-gradient(135deg, #222222, #2d0000); display: flex; align-items: center; justify-content: center; font-size: 60px; }
+        .circuit-card-info { padding: 15px 20px; }
+        .circuit-card-info .name { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #e10600; }
+        .circuit-card-info .location { font-size: 12px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+        .circuit-card-stats { display: flex; justify-content: space-around; padding: 12px 20px; background-color: #222222; border-top: 1px solid #333333; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 18px; font-weight: 900; color: #e10600; }
+        .stat-label { font-size: 10px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px; }
+        .footer { background-color: #e10600; padding: 20px 30px; text-align: center; color: white; font-size: 13px; letter-spacing: 1px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="javascript:history.back()" class="back-btn">&#8592;</a>
+            <h1>🏎️ F1 ENCYCLOPEDIA</h1>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="menu" id="menu">
+            <a href="/">🏠 Home</a>
+            <div class="divider"></div>
+            <a href="/drivers/">👤 Drivers</a>
+            <a href="/teams/">🏢 Teams</a>
+            <a href="/circuits/">🏟️ Circuits</a>
+            <a href="/seasons/">🏆 Seasons</a>
+            <div class="divider"></div>
+            <a href="/records/">📊 Records</a>
+            <a href="/glossary/">📖 Glossary</a>
+            <a href="/halloffame/">🌟 Hall of Fame</a>
+            <a href="/tyres/">🔴 Tyres</a>
+            <div class="divider"></div>
+            <a href="/admin">⚙️ Admin</a>
+        </div>
+    </div>
+    <div class="page-header">
+        <h2>🏟️ F1 Circuits</h2>
+        <p>EXPLORE ALL FORMULA 1 TRACKS</p>
+    </div>
+    <div class="circuits-section">
+        <div class="circuits-grid">
+            {% for circuit in circuits %}
+            <a href="/circuits/{{ circuit.pk }}/" class="circuit-card">
+                {% if circuit.track_image %}
+                <img src="{{ circuit.track_image.url }}" alt="{{ circuit.name }}">
+                {% else %}
+                <div class="no-image">🏟️</div>
+                {% endif %}
+                <div class="circuit-card-info">
+                    <div class="name">{{ circuit.name }}</div>
+                    <div class="location">📍 {{ circuit.city }}, {{ circuit.country }}</div>
+                </div>
+                <div class="circuit-card-stats">
+                    <div class="stat">
+                        <div class="stat-number">{{ circuit.length_km }}</div>
+                        <div class="stat-label">KM</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">{{ circuit.turns }}</div>
+                        <div class="stat-label">Turns</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">{{ circuit.first_gp_year }}</div>
+                        <div class="stat-label">First GP</div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="footer">🏎️ F1 ENCYCLOPEDIA — ALL RIGHTS RESERVED</div>
+    <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

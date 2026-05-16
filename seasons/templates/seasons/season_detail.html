@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ season.year }} F1 Season | F1 Encyclopedia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #111111; color: #ffffff; }
+        .navbar { background-color: #e10600; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+        .navbar-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn { color: white; text-decoration: none; font-size: 22px; }
+        .back-btn:hover { opacity: 0.7; }
+        .navbar h1 { color: white; font-size: 24px; letter-spacing: 2px; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 5px; }
+        .hamburger span { display: block; width: 25px; height: 3px; background-color: white; border-radius: 3px; }
+        .menu { display: none; position: absolute; top: 60px; right: 20px; background-color: #1a1a1a; border: 1px solid #e10600; border-radius: 8px; padding: 10px 0; min-width: 200px; z-index: 1000; }
+        .menu.active { display: block; }
+        .menu a { display: block; padding: 10px 20px; color: white; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-left: 3px solid transparent; }
+        .menu a:hover { background-color: #222222; border-left: 3px solid #e10600; color: #e10600; }
+        .menu .divider { height: 1px; background-color: #333333; margin: 5px 0; }
+        .hero { background: linear-gradient(135deg, #1a1a1a, #2d0000); padding: 50px 30px; text-align: center; border-bottom: 3px solid #e10600; }
+        .hero .year { font-size: 100px; font-weight: 900; color: #e10600; line-height: 1; }
+        .hero .title { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-top: 10px; }
+        .champions-section { padding: 40px 30px; background-color: #1a1a1a; }
+        .champions-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .champions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .champion-card { background-color: #222222; border-radius: 8px; padding: 20px; text-align: center; border-top: 3px solid #e10600; }
+        .champion-card .label { font-size: 11px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px; }
+        .champion-card .value { font-size: 22px; font-weight: 900; color: #e10600; margin-top: 8px; }
+        .standings-section { padding: 40px 30px; background-color: #111111; }
+        .standings-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .standings-table { width: 100%; border-collapse: collapse; }
+        .standings-table th { background-color: #e10600; color: white; padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .standings-table td { padding: 12px 15px; border-bottom: 1px solid #222222; font-size: 14px; }
+        .standings-table tr:nth-child(even) { background-color: #1a1a1a; }
+        .standings-table tr:hover { background-color: #222222; }
+        .position-1 { color: #FFD700; font-weight: 900; font-size: 18px; }
+        .position-2 { color: #C0C0C0; font-weight: 700; }
+        .position-3 { color: #CD7F32; font-weight: 700; }
+        .bio-section { padding: 40px 30px; background-color: #1a1a1a; }
+        .bio-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .bio-section p { color: #cccccc; line-height: 1.8; font-size: 16px; }
+        .footer { background-color: #e10600; padding: 20px 30px; text-align: center; color: white; font-size: 13px; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="javascript:history.back()" class="back-btn">&#8592;</a>
+            <h1>🏎️ F1 ENCYCLOPEDIA</h1>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="menu" id="menu">
+            <a href="/">🏠 Home</a>
+            <div class="divider"></div>
+            <a href="/drivers/">👤 Drivers</a>
+            <a href="/teams/">🏢 Teams</a>
+            <a href="/circuits/">🏟️ Circuits</a>
+            <a href="/seasons/">🏆 Seasons</a>
+            <div class="divider"></div>
+            <a href="/records/">📊 Records</a>
+            <a href="/glossary/">📖 Glossary</a>
+            <a href="/halloffame/">🌟 Hall of Fame</a>
+            <a href="/tyres/">🔴 Tyres</a>
+            <div class="divider"></div>
+            <a href="/admin">⚙️ Admin</a>
+        </div>
+    </div>
+    <div class="hero">
+        <div class="year">{{ season.year }}</div>
+        <div class="title">Formula 1 World Championship</div>
+    </div>
+    <div class="champions-section">
+        <h2>Champions</h2>
+        <div class="champions-grid">
+            <div class="champion-card">
+                {% if season.driver_champion_image %}
+                <img src="{{ season.driver_champion_image.url }}" alt="{{ season.drivers_champion }}" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+                {% endif %}
+                <div class="label">Drivers Champion</div>
+                <div class="value">{{ season.drivers_champion }}</div>
+            </div>
+            <div class="champion-card">
+                {% if season.constructor_champion_image %}
+                <img src="{{ season.constructor_champion_image.url }}" alt="{{ season.constructors_champion }}" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+                {% endif %}
+                <div class="label">Constructors Champion</div>
+                <div class="value">{{ season.constructors_champion }}</div>
+            </div>
+            <div class="champion-card">
+                {% if season.season_image %}
+                <img src="{{ season.season_image.url }}" alt="{{ season.year }}" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+                {% endif %}
+                <div class="label">Total Races</div>
+                <div class="value">{{ season.total_races }}</div>
+            </div>
+        </div>
+    </div>
+    {% if results %}
+    <div class="standings-section">
+        <h2>Driver Standings</h2>
+        <table class="standings-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Driver</th>
+                    <th>Team</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>
+                        {% if result.position == 1 %}
+                        <span class="position-1">🥇 1</span>
+                        {% elif result.position == 2 %}
+                        <span class="position-2">🥈 2</span>
+                        {% elif result.position == 3 %}
+                        <span class="position-3">🥉 3</span>
+                        {% else %}
+                        {{ result.position }}
+                        {% endif %}
+                    </td>
+                    <td>{{ result.driver }}</td>
+                    <td>{{ result.team }}</td>
+                    <td>{{ result.points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if season.description %}
+    <div class="bio-section">
+        <h2>Season Overview</h2>
+        <p>{{ season.description }}</p>
+    </div>
+    {% endif %}
+    <div class="footer">🏎️ F1 ENCYCLOPEDIA — ALL RIGHTS RESERVED</div>
+    <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

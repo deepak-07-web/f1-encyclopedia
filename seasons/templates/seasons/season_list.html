@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>F1 Seasons | F1 Encyclopedia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #111111; color: #ffffff; }
+        .navbar { background-color: #e10600; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+        .navbar-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn { color: white; text-decoration: none; font-size: 22px; }
+        .back-btn:hover { opacity: 0.7; }
+        .navbar h1 { color: white; font-size: 24px; letter-spacing: 2px; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 5px; }
+        .hamburger span { display: block; width: 25px; height: 3px; background-color: white; border-radius: 3px; }
+        .menu { display: none; position: absolute; top: 60px; right: 20px; background-color: #1a1a1a; border: 1px solid #e10600; border-radius: 8px; padding: 10px 0; min-width: 200px; z-index: 1000; }
+        .menu.active { display: block; }
+        .menu a { display: block; padding: 10px 20px; color: white; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-left: 3px solid transparent; }
+        .menu a:hover { background-color: #222222; border-left: 3px solid #e10600; color: #e10600; }
+        .menu .divider { height: 1px; background-color: #333333; margin: 5px 0; }
+        .page-header { background: linear-gradient(135deg, #1a1a1a, #2d0000); padding: 40px 30px; border-bottom: 3px solid #e10600; }
+        .page-header h2 { font-size: 36px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
+        .page-header p { color: #aaaaaa; margin-top: 8px; font-size: 14px; letter-spacing: 1px; }
+        .seasons-section { padding: 40px 30px; }
+        .seasons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .season-card { background-color: #1a1a1a; border-radius: 10px; overflow: hidden; border-top: 3px solid #e10600; transition: transform 0.2s; text-decoration: none; color: white; padding: 20px; text-align: center; }
+        .season-card:hover { transform: translateY(-5px); background-color: #222222; }
+        .season-card .year { font-size: 42px; font-weight: 900; color: #e10600; }
+        .season-card .champion { font-size: 14px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 1px; }
+        .season-card .team { font-size: 12px; color: #aaaaaa; margin-top: 4px; }
+        .season-card .races { font-size: 11px; color: #666666; margin-top: 8px; text-transform: uppercase; }
+        .footer { background-color: #e10600; padding: 20px 30px; text-align: center; color: white; font-size: 13px; letter-spacing: 1px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="javascript:history.back()" class="back-btn">&#8592;</a>
+            <h1>🏎️ F1 ENCYCLOPEDIA</h1>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="menu" id="menu">
+            <a href="/">🏠 Home</a>
+            <div class="divider"></div>
+            <a href="/drivers/">👤 Drivers</a>
+            <a href="/teams/">🏢 Teams</a>
+            <a href="/circuits/">🏟️ Circuits</a>
+            <a href="/seasons/">🏆 Seasons</a>
+            <div class="divider"></div>
+            <a href="/records/">📊 Records</a>
+            <a href="/glossary/">📖 Glossary</a>
+            <a href="/halloffame/">🌟 Hall of Fame</a>
+            <a href="/tyres/">🔴 Tyres</a>
+            <div class="divider"></div>
+            <a href="/admin">⚙️ Admin</a>
+        </div>
+    </div>
+    <div class="page-header">
+        <h2>🏆 F1 Seasons</h2>
+        <p>CHAMPIONSHIP HISTORY FROM 1950 TO 2025</p>
+    </div>
+    <div class="seasons-section">
+        <div class="seasons-grid">
+            {% for season in seasons %}
+            <a href="/seasons/{{ season.pk }}/" class="season-card">
+                <div class="year">{{ season.year }}</div>
+                <div class="champion">🏆 {{ season.drivers_champion }}</div>
+                <div class="team">🏢 {{ season.constructors_champion }}</div>
+                <div class="races">{{ season.total_races }} Races</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="footer">🏎️ F1 ENCYCLOPEDIA — ALL RIGHTS RESERVED</div>
+    <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

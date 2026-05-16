@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ driver.name }} | F1 Encyclopedia</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #111111; color: #ffffff; }
+        .navbar { background-color: #e10600; padding: 15px 30px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+        .navbar-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn { color: white; text-decoration: none; font-size: 22px; }
+        .back-btn:hover { opacity: 0.7; }
+        .navbar h1 { color: white; font-size: 24px; letter-spacing: 2px; }
+        .hamburger { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 5px; }
+        .hamburger span { display: block; width: 25px; height: 3px; background-color: white; border-radius: 3px; }
+        .menu { display: none; position: absolute; top: 60px; right: 20px; background-color: #1a1a1a; border: 1px solid #e10600; border-radius: 8px; padding: 10px 0; min-width: 200px; z-index: 1000; }
+        .menu.active { display: block; }
+        .menu a { display: block; padding: 10px 20px; color: white; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-left: 3px solid transparent; }
+        .menu a:hover { background-color: #222222; border-left: 3px solid #e10600; color: #e10600; }
+        .menu .divider { height: 1px; background-color: #333333; margin: 5px 0; }
+        .hero { background: linear-gradient(135deg, #1a1a1a, #2d0000); padding: 50px 30px; display: flex; align-items: center; gap: 40px; border-bottom: 3px solid #e10600; }
+        .hero img { width: 250px; height: 280px; object-fit: cover; border-radius: 10px; border: 3px solid #e10600; }
+        .hero-info h1 { font-size: 48px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; }
+        .hero-info .number { font-size: 80px; font-weight: 900; color: #e10600; line-height: 1; }
+        .hero-info .nationality { font-size: 18px; color: #aaaaaa; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .stats-section { padding: 40px 30px; background-color: #1a1a1a; }
+        .stats-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .stat-card { background-color: #222222; border-radius: 8px; padding: 20px; text-align: center; border-top: 3px solid #e10600; }
+        .stat-card .stat-number { font-size: 36px; font-weight: 900; color: #e10600; }
+        .stat-card .stat-label { font-size: 12px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+        .profile-section { padding: 40px 30px; background-color: #111111; }
+        .profile-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .profile-item { background-color: #1a1a1a; padding: 15px 20px; border-radius: 8px; }
+        .profile-item .label { font-size: 11px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px; }
+        .profile-item .value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+        .bio-section { padding: 40px 30px; background-color: #1a1a1a; }
+        .bio-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .bio-section p { color: #cccccc; line-height: 1.8; font-size: 16px; }
+        .gallery-section { padding: 40px 30px; background-color: #111111; }
+        .gallery-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .gallery-item img { width: 100%; border-radius: 8px; border: 2px solid #333333; }
+        .gallery-item p { color: #aaaaaa; font-size: 12px; text-align: center; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .footer { background-color: #e10600; padding: 20px 30px; text-align: center; color: white; font-size: 13px; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-left">
+            <a href="javascript:history.back()" class="back-btn">&#8592;</a>
+            <h1>🏎️ F1 ENCYCLOPEDIA</h1>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="menu" id="menu">
+            <a href="/">🏠 Home</a>
+            <div class="divider"></div>
+            <a href="/drivers/">👤 Drivers</a>
+            <a href="/teams/">🏢 Teams</a>
+            <a href="/circuits/">🏟️ Circuits</a>
+            <a href="/seasons/">🏆 Seasons</a>
+            <div class="divider"></div>
+            <a href="/records/">📊 Records</a>
+            <a href="/glossary/">📖 Glossary</a>
+            <a href="/halloffame/">🌟 Hall of Fame</a>
+            <a href="/tyres/">🔴 Tyres</a>
+            <div class="divider"></div>
+            <a href="/admin">⚙️ Admin</a>
+        </div>
+    </div>
+    <div class="hero">
+        {% if driver.image %}
+        <img src="{{ driver.image.url }}" alt="{{ driver.name }}">
+        {% endif %}
+        {% if driver.helmet_image %}
+        <img src="{{ driver.helmet_image.url }}" alt="Helmet" style="width:150px; height:150px; object-fit:cover; border-radius:10px; border:3px solid #e10600;">
+        {% endif %}
+        <div class="hero-info">
+            <div class="number">#{{ driver.driver_number }}</div>
+            <h1>{{ driver.name }}</h1>
+            <div class="nationality">🌍 {{ driver.nationality }}</div>
+        </div>
+    </div>
+    <div class="stats-section">
+        <h2>Career Stats</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ driver.championships }}</div>
+                <div class="stat-label">Championships</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ driver.wins }}</div>
+                <div class="stat-label">Wins</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ driver.podiums }}</div>
+                <div class="stat-label">Podiums</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ driver.pole_positions }}</div>
+                <div class="stat-label">Pole Positions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ driver.fastest_laps }}</div>
+                <div class="stat-label">Fastest Laps</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ driver.races }}</div>
+                <div class="stat-label">Races</div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-section">
+        <h2>Profile</h2>
+        <div class="profile-grid">
+            <div class="profile-item">
+                <div class="label">Date of Birth</div>
+                <div class="value">{{ driver.date_of_birth }}</div>
+            </div>
+            <div class="profile-item">
+                <div class="label">Nationality</div>
+                <div class="value">{{ driver.nationality }}</div>
+            </div>
+            <div class="profile-item">
+                <div class="label">Driver Number</div>
+                <div class="value">#{{ driver.driver_number }}</div>
+            </div>
+            <div class="profile-item">
+                <div class="label">Debut Year</div>
+                <div class="value">{{ driver.debut_year }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="bio-section">
+        <h2>Biography</h2>
+        <p>{{ driver.bio }}</p>
+    </div>
+    <div class="gallery-section">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            {% if driver.action_image %}
+            <div class="gallery-item">
+                <img src="{{ driver.action_image.url }}" alt="Action">
+                <p>Action</p>
+            </div>
+            {% endif %}
+            {% if driver.podium_image %}
+            <div class="gallery-item">
+                <img src="{{ driver.podium_image.url }}" alt="Podium">
+                <p>Podium</p>
+            </div>
+            {% endif %}
+            {% if driver.young_career_image %}
+            <div class="gallery-item">
+                <img src="{{ driver.young_career_image.url }}" alt="Young Career">
+                <p>Young Career</p>
+            </div>
+            {% endif %}
+            {% if driver.car_image %}
+            <div class="gallery-item">
+                <img src="{{ driver.car_image.url }}" alt="Car">
+                <p>Car</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="footer">🏎️ F1 ENCYCLOPEDIA — ALL RIGHTS RESERVED</div>
+    <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
