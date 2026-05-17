@@ -50,6 +50,20 @@ class Command(BaseCommand):
             count = inter_dup.count()
             inter_dup.delete()
             self.stdout.write(self.style.SUCCESS(f"  ✓ Removed {count} duplicate: Intermediate"))
+        
+        # Remove: "Soft Compound" (keep "Pirelli P Zero Soft")
+        soft_dup = Tyre.objects.filter(name="Soft Compound")
+        if soft_dup.exists():
+            count = soft_dup.count()
+            soft_dup.delete()
+            self.stdout.write(self.style.SUCCESS(f"  ✓ Removed {count} duplicate: Soft Compound"))
+        
+        # Remove: "Wet" (keep "Pirelli Cinturato Wet")
+        wet_dup = Tyre.objects.filter(name="Wet")
+        if wet_dup.exists():
+            count = wet_dup.count()
+            wet_dup.delete()
+            self.stdout.write(self.style.SUCCESS(f"  ✓ Removed {count} duplicate: Wet"))
 
         self.stdout.write("\n" + "="*60)
         self.stdout.write(self.style.SUCCESS("✓ Cleanup Complete - All Duplicates Removed!"))
