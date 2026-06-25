@@ -14,4 +14,8 @@ urlpatterns = [
     path('terminology/', include('terminology.urls')),
     path('halloffame/', include('halloffame.urls')),
     path('tyres/', include('tyres.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Serve media files in production too
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
