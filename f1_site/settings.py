@@ -34,8 +34,19 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 if DEBUG:
     ALLOWED_HOSTS = ['*']  # Allow all in development
 else:
-    # In production (Railway), allow all hosts (safe in managed environment)
-    ALLOWED_HOSTS = ['*']
+    # In production, allow PythonAnywhere and Railway domains
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        '*.pythonanywhere.com',  # PythonAnywhere domain
+        '*.railway.app',  # Railway domain
+        '.up.railway.app',  # Railway production domain
+    ]
+    
+    # Add custom hosts from environment
+    if os.getenv('ALLOWED_HOSTS'):
+        custom_hosts = [h.strip() for h in os.getenv('ALLOWED_HOSTS').split(',') if h.strip()]
+        ALLOWED_HOSTS.extend(custom_hosts)
 
 
 # Application definition
