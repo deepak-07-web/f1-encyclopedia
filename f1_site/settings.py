@@ -30,17 +30,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-jj@^8!+2-+!%r2b=kl&8w4me5#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# ALLOWED_HOSTS configuration
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'courteous-upliftment-production.up.railway.app',
-]
-
-# Add any custom ALLOWED_HOSTS from environment
-if os.getenv('ALLOWED_HOSTS'):
-    custom_hosts = [h.strip() for h in os.getenv('ALLOWED_HOSTS').split(',') if h.strip()]
-    ALLOWED_HOSTS.extend(custom_hosts)
+# ALLOWED_HOSTS
+if DEBUG:
+    ALLOWED_HOSTS = ['*']  # Allow all in development
+else:
+    # In production (Railway), allow all hosts (safe in managed environment)
+    ALLOWED_HOSTS = ['*']
 
 
 # Application definition
