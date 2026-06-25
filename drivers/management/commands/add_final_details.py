@@ -1,16 +1,16 @@
 from django.core.management.base import BaseCommand
 from seasons.models import Season, SeasonResult
 from records.models import Record
-from glossary.models import GlossaryTerm
+from terminology.models import TerminologyTerm
 from tyres.models import Tyre
 
 class Command(BaseCommand):
-    help = 'Add comprehensive final details: constructor standings, more records, glossary, and tyres (does NOT delete existing data)'
+    help = 'Add comprehensive final details: constructor standings, more records, terminology, and tyres (does NOT delete existing data)'
 
     def handle(self, *args, **options):
         self.add_constructor_standings()
         self.add_more_records()
-        self.add_more_glossary()
+        self.add_more_terminology()
         self.add_more_tyres()
         
         self.stdout.write(self.style.SUCCESS('\n✓✓✓ All comprehensive final details added successfully! ✓✓✓\n'))
@@ -277,9 +277,9 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(f'  ⊘ Exists: {record.title}')
 
-    def add_more_glossary(self):
-        self.stdout.write('\n--- Adding More Glossary Terms ---')
-        new_glossary = [
+    def add_more_terminology(self):
+        self.stdout.write('\n--- Adding More Terminology Terms ---')
+        new_terminology = [
             {
                 'term': 'Suspension',
                 'definition': 'The system connecting wheels to the chassis, managing ride height and handling.',
@@ -382,8 +382,8 @@ class Command(BaseCommand):
             },
         ]
 
-        for term_data in new_glossary:
-            term, created = GlossaryTerm.objects.get_or_create(
+        for term_data in new_terminology:
+            term, created = TerminologyTerm.objects.get_or_create(
                 term=term_data['term'],
                 defaults=term_data
             )

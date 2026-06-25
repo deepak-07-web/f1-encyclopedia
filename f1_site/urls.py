@@ -11,7 +11,7 @@ urlpatterns = [
     path('circuits/', include('circuits.urls')),
     path('seasons/', include('seasons.urls')),
     path('records/', include('records.urls')),
-    path('glossary/', include('glossary.urls')),
+    path('terminology/', include('terminology.urls')),
     path('halloffame/', include('halloffame.urls')),
     path('tyres/', include('tyres.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

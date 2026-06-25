@@ -19,6 +19,8 @@ class Driver(models.Model):
     # Extra Info
     bio = models.TextField()
     debut_year = models.IntegerField()
+    team_name = models.CharField(max_length=100, blank=True, null=True)
+    team_color = models.CharField(max_length=7, default='#e10600', help_text='Use a hex color for the driver/team accent line.')
     
     # Image
     image = models.ImageField(upload_to='drivers/', blank=True, null=True)
@@ -32,3 +34,29 @@ class Driver(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class DriverTeamPeriod(models.Model):
+    driver = models.ForeignKey(Driver, related_name='team_periods', on_delete=models.CASCADE)
+    team_name = models.CharField(max_length=100)
+    team_color = models.CharField(max_length=7, default='#e10600', help_text='Use a hex color for the team period accent.')
+    start_year = models.IntegerField()
+    end_year = models.IntegerField(blank=True, null=True, help_text='Leave empty if the driver is currently with this team.')
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['start_year', 'order']
+
+    def __str__(self):
+        end_label = self.end_year if self.end_year else 'Present'
+        return f"{self.driver.name} — {self.team_name} ({self.start_year}-{end_label})"
+
+    def active_end_year(self):
+        from datetime import date
+        return self.end_year or date.today().year
+
+    def range_label(self):
+        return f"{self.start_year}-{self.end_year if self.end_year else 'Present'}"
+
+    def duration_years(self):
+        return self.active_end_year() - self.start_year + 1

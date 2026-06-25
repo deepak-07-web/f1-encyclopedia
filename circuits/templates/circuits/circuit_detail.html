@@ -63,7 +63,7 @@
             <a href="/seasons/">🏆 Seasons</a>
             <div class="divider"></div>
             <a href="/records/">📊 Records</a>
-            <a href="/glossary/">📖 Glossary</a>
+            <a href="/terminology/">📖 Terminology</a>
             <a href="/halloffame/">🌟 Hall of Fame</a>
             <a href="/tyres/">🔴 Tyres</a>
             <div class="divider"></div>
@@ -157,14 +157,6 @@
                 menu.classList.remove('active');
             }
         });
-        // Escape key to go back - blocks extension interference
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' || e.keyCode === 27) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                window.history.back();
-            }
-        }, true);
     </script>
 </body>
 </html>

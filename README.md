@@ -9,7 +9,7 @@ A comprehensive Django-based Formula 1 Encyclopedia application with detailed in
 - **Circuits**: All F1 race venues with lap records and track specifications
 - **Seasons**: Championship standings (driver & constructor) from 2010-2025
 - **Records**: Historic F1 records and achievements
-- **Glossary**: Technical F1 terminology and racing concepts
+- **Terminology**: Technical F1 terminology and racing concepts
 - **Hall of Fame**: Legendary F1 drivers
 - **Tyres**: Pirelli tyre specifications and compounds
 
@@ -93,7 +93,7 @@ f1-ency/
 ├── circuits/                       # Circuits app
 ├── seasons/                        # Seasons app
 ├── records/                        # Records app
-├── glossary/                       # Glossary app
+├── terminology/                    # Terminology app
 ├── halloffame/                     # Hall of Fame app
 ├── tyres/                          # Tyres app
 └── ...
@@ -106,7 +106,7 @@ All data operations use Django's `.get_or_create()` pattern - **safe, non-destru
 | Command | Purpose |
 |---------|---------|
 | `add_drivers` | Add modern F1 drivers |
-| `add_more_data` | Add additional drivers, seasons, records, glossary |
+| `add_more_data` | Add additional drivers, seasons, records, terminology |
 | `add_circuits` | Add F1 circuits/venues |
 | `add_comprehensive_data` | Add historic teams and drivers |
 | `add_season_standings` | Add championship standings (2010-2025) |
@@ -120,7 +120,7 @@ All data operations use Django's `.get_or_create()` pattern - **safe, non-destru
 - ✅ 25 Circuits
 - ✅ 13 Seasons (2010, 2014-2025)
 - ✅ 29 Records
-- ✅ 62 Glossary Terms
+- ✅ 62 Terminology Terms
 - ✅ 10 Hall of Fame Legends
 - ✅ 10 Tyre Types
 
@@ -130,7 +130,7 @@ Access Django admin at `http://127.0.0.1:8000/admin/` with your superuser creden
 - Add/edit drivers, teams, circuits
 - Manage seasons and standings
 - Upload images and media
-- Edit records and glossary terms
+- Edit records and terminology terms
 
 ## Adding Images
 
@@ -178,7 +178,7 @@ This generates a comprehensive report of all database entries without making any
 Feel free to:
 - Add more drivers and their statistics
 - Include additional circuits
-- Expand glossary with more F1 terminology
+- Expand terminology with more F1 terminology
 - Add historical records and achievements
 - Upload driver/team/circuit images
 

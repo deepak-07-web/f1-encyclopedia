@@ -60,7 +60,7 @@
             <a href="/seasons/">🏆 Seasons</a>
             <div class="divider"></div>
             <a href="/records/">📊 Records</a>
-            <a href="/glossary/">📖 Glossary</a>
+            <a href="/terminology/">📖 Terminology</a>
             <a href="/halloffame/">🌟 Hall of Fame</a>
             <a href="/tyres/">🔴 Tyres</a>
             <div class="divider"></div>
@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    {% if results %}
+    {% if driver_results %}
     <div class="standings-section">
         <h2>Driver Standings</h2>
         <table class="standings-table">
@@ -110,7 +110,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for result in results %}
+                {% for result in driver_results %}
                 <tr>
                     <td>
                         {% if result.position == 1 %}
@@ -121,6 +121,41 @@
                         <span class="position-3">🥉 3</span>
                         {% else %}
                         {{ result.position }}
+                        {% endif %}
+                    </td>
+                    <td>{{ result.driver }}</td>
+                    <td>{{ result.team }}</td>
+                    <td>{{ result.points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if constructor_results %}
+    <div class="standings-section">
+        <h2>Constructor Standings</h2>
+        <table class="standings-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Constructor</th>
+                    <th>Team</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in constructor_results %}
+                <tr>
+                    <td>
+                        {% if result.position == 101 %}
+                        <span class="position-1">🥇 1</span>
+                        {% elif result.position == 102 %}
+                        <span class="position-2">🥈 2</span>
+                        {% elif result.position == 103 %}
+                        <span class="position-3">🥉 3</span>
+                        {% else %}
+                        {{ result.position|add:"-100" }}
                         {% endif %}
                     </td>
                     <td>{{ result.driver }}</td>
@@ -150,14 +185,6 @@
                 menu.classList.remove('active');
             }
         });
-        // Escape key to go back - blocks extension interference
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' || e.keyCode === 27) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                window.history.back();
-            }
-        }, true);
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@ from drivers.models import Driver
 from teams.models import Team
 from seasons.models import Season, SeasonResult
 from records.models import Record
-from glossary.models import GlossaryTerm
+from terminology.models import TerminologyTerm
 from halloffame.models import Legend
 from datetime import date
 
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         self.add_more_drivers()
         self.add_more_seasons()
         self.add_more_records()
-        self.add_more_glossary()
+        self.add_more_terminology()
         self.add_more_legends()
         
         self.stdout.write(self.style.SUCCESS('\n✓✓✓ All comprehensive F1 data added successfully! ✓✓✓\n'))
@@ -446,9 +446,9 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(f'  ⊘ Exists: {record.title}')
 
-    def add_more_glossary(self):
-        self.stdout.write('\n--- Adding More Glossary Terms ---')
-        new_glossary = [
+    def add_more_terminology(self):
+        self.stdout.write('\n--- Adding More Terminology Terms ---')
+        new_terminology = [
             {
                 'term': 'Aerodynamics',
                 'definition': 'The study of air flow around the car to generate downforce and minimize drag.',
@@ -526,8 +526,8 @@ class Command(BaseCommand):
             },
         ]
 
-        for term_data in new_glossary:
-            term, created = GlossaryTerm.objects.get_or_create(
+        for term_data in new_terminology:
+            term, created = TerminologyTerm.objects.get_or_create(
                 term=term_data['term'],
                 defaults=term_data
             )

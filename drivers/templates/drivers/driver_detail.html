@@ -22,6 +22,14 @@
         .hero-info h1 { font-size: 48px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; }
         .hero-info .number { font-size: 80px; font-weight: 900; color: #e10600; line-height: 1; }
         .hero-info .nationality { font-size: 18px; color: #aaaaaa; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .team-timeline { padding: 30px 30px 10px; background-color: #111111; text-align: center; }
+        .team-timeline .timeline-label { color: #ffffff; font-size: 18px; font-weight: 700; margin-bottom: 12px; letter-spacing: 2px; text-transform: uppercase; }
+        .team-timeline .timeline-strip { display: flex; width: 100%; max-width: 780px; height: 18px; border-radius: 12px; overflow: hidden; margin: 0 auto 12px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+        .team-timeline .timeline-segment { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.9); font-size: 12px; font-weight: 700; min-width: 40px; text-transform: uppercase; letter-spacing: 1px; }
+        .team-timeline .timeline-years { display: flex; justify-content: space-between; max-width: 780px; margin: 0 auto 16px; color: #aaaaaa; font-size: 14px; letter-spacing: 1px; }
+        .team-timeline .timeline-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; max-width: 780px; margin: 0 auto; text-align: left; }
+        .team-timeline .timeline-legend-item { display: flex; align-items: center; gap: 8px; color: #cccccc; font-size: 13px; }
+        .team-timeline .legend-swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
         .stats-section { padding: 40px 30px; background-color: #1a1a1a; }
         .stats-section h2 { color: #e10600; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; border-left: 4px solid #e10600; padding-left: 12px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
@@ -63,7 +71,7 @@
             <a href="/seasons/">🏆 Seasons</a>
             <div class="divider"></div>
             <a href="/records/">📊 Records</a>
-            <a href="/glossary/">📖 Glossary</a>
+            <a href="/terminology/">📖 Terminology</a>
             <a href="/halloffame/">🌟 Hall of Fame</a>
             <a href="/tyres/">🔴 Tyres</a>
             <div class="divider"></div>
@@ -82,6 +90,38 @@
             <h1>{{ driver.name }}</h1>
             <div class="nationality">🌍 {{ driver.nationality }}</div>
         </div>
+    </div>
+    <div class="team-timeline">
+        <div class="timeline-label">Career Team Timeline</div>
+        {% if timeline_periods %}
+        <div class="timeline-strip">
+            {% for period in timeline_periods %}
+            <div class="timeline-segment" style="width: {{ period.width }}%; background: {{ period.team_color }};" title="{{ period.team_name }} {{ period.label }}">
+                {% if period.width >= 15 %}{{ period.team_name }}{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="timeline-years">
+            <span>{{ timeline_start }}</span>
+            <span>{{ timeline_end }}</span>
+        </div>
+        <div class="timeline-legend">
+            {% for period in timeline_periods %}
+            <div class="timeline-legend-item">
+                <span class="legend-swatch" style="background: {{ period.team_color }};"></span>
+                <span>{{ period.label }} — {{ period.team_name }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="timeline-strip">
+            <div class="timeline-segment" style="width: 100%; background: {{ driver.team_color|default:'#e10600' }};"></div>
+        </div>
+        <div class="timeline-years">
+            <span>{{ driver.debut_year|default:'2010' }}</span>
+            <span>{% now "Y" %}</span>
+        </div>
+        {% endif %}
     </div>
     <div class="stats-section">
         <h2>Career Stats</h2>
@@ -178,14 +218,6 @@
                 menu.classList.remove('active');
             }
         });
-        // Escape key to go back - blocks extension interference
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' || e.keyCode === 27) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                window.history.back();
-            }
-        }, true);
     </script>
 </body>
 </html>

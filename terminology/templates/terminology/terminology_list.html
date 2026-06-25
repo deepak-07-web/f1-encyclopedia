@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>F1 Glossary | F1 Encyclopedia</title>
+    <title>F1 Terminology | F1 Encyclopedia</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
         body { background-color: #111111; color: #ffffff; }
@@ -20,8 +20,8 @@
         .page-header { background: linear-gradient(135deg, #1a1a1a, #2d0000); padding: 40px 30px; border-bottom: 3px solid #e10600; }
         .page-header h2 { font-size: 36px; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; }
         .page-header p { color: #aaaaaa; margin-top: 8px; font-size: 14px; letter-spacing: 1px; }
-        .glossary-section { padding: 40px 30px; }
-        .glossary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .terminology-section { padding: 40px 30px; }
+        .terminology-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .term-card { background-color: #1a1a1a; border-radius: 8px; padding: 20px; border-left: 4px solid #e10600; }
         .term-card .term { font-size: 20px; font-weight: 900; color: #e10600; text-transform: uppercase; letter-spacing: 1px; }
         .term-card .category { font-size: 11px; color: #666666; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
@@ -47,7 +47,7 @@
             <a href="/seasons/">🏆 Seasons</a>
             <div class="divider"></div>
             <a href="/records/">📊 Records</a>
-            <a href="/glossary/">📖 Glossary</a>
+            <a href="/terminology/">📖 Terminology</a>
             <a href="/halloffame/">🌟 Hall of Fame</a>
             <a href="/tyres/">🔴 Tyres</a>
             <div class="divider"></div>
@@ -55,11 +55,11 @@
         </div>
     </div>
     <div class="page-header">
-        <h2>📖 F1 Glossary</h2>
+        <h2>📖 F1 Terminology</h2>
         <p>FORMULA 1 TERMS EXPLAINED</p>
     </div>
-    <div class="glossary-section">
-        <div class="glossary-grid">
+    <div class="terminology-section">
+        <div class="terminology-grid">
             {% for term in terms %}
             <div class="term-card">
                 <div class="term">{{ term.term }}</div>

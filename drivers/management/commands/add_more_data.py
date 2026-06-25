@@ -3,16 +3,16 @@ from datetime import date
 from drivers.models import Driver
 from seasons.models import Season, SeasonResult
 from records.models import Record
-from glossary.models import GlossaryTerm
+from terminology.models import TerminologyTerm
 
 class Command(BaseCommand):
-    help = 'Add more F1 data: drivers, seasons, records, and glossary (does NOT delete existing data)'
+    help = 'Add more F1 data: drivers, seasons, records, and terminology (does NOT delete existing data)'
 
     def handle(self, *args, **options):
         self.add_drivers()
         self.add_seasons()
         self.add_records()
-        self.add_glossary()
+        self.add_terminology()
         
         self.stdout.write(self.style.SUCCESS('\n✓ All data added successfully! No existing data was affected.'))
 
@@ -250,9 +250,9 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(f'  ⊘ Exists: {record.title}')
 
-    def add_glossary(self):
-        self.stdout.write('\n--- Adding Glossary Terms ---')
-        new_glossary = [
+    def add_terminology(self):
+        self.stdout.write('\n--- Adding Terminology Terms ---')
+        new_terminology = [
             {
                 'term': 'Brake Balance',
                 'definition': 'The adjustment of braking force distribution between front and rear wheels.',
@@ -313,10 +313,165 @@ class Command(BaseCommand):
                 'definition': 'Achieving pole position, fastest lap, and winning a race in the same weekend.',
                 'category': 'Racing'
             },
+            {
+                'term': 'Apex',
+                'definition': 'The point in a corner where the car is closest to the inside edge of the track.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Chassis',
+                'definition': 'The structural frame of the car that supports all components and the driver.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'DRS',
+                'definition': 'Drag Reduction System used to reduce aerodynamic drag and improve overtaking.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Drag',
+                'definition': 'Aerodynamic resistance that slows the car down, especially on straight sections.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Downforce',
+                'definition': 'Aerodynamic force that pushes the car onto the track to increase grip through corners.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Fuel Mix',
+                'definition': 'Engine setting that adjusts power output and fuel efficiency during the race.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Full Course Yellow',
+                'definition': 'A caution condition where the whole track is under yellow flag and drivers must slow down.',
+                'category': 'Safety'
+            },
+            {
+                'term': 'Green Flag',
+                'definition': 'The signal that normal racing has resumed after a caution or formation lap.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Ground Effect',
+                'definition': 'The aerodynamic principle where low pressure under the car generates downforce.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Heel-and-Toe',
+                'definition': 'A driving technique that allows simultaneous braking and downshifting smoothly.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Hot Lap',
+                'definition': 'A fast lap used to set a quick time in qualifying or test car performance in race trim.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Parc Fermé',
+                'definition': 'The restricted area and conditions after qualifying where car setup changes are limited.',
+                'category': 'Regulation'
+            },
+            {
+                'term': 'Pit Lane Speed Limit',
+                'definition': 'The maximum allowed speed in the pit lane to protect mechanics and other personnel.',
+                'category': 'Safety'
+            },
+            {
+                'term': 'Pole Position',
+                'definition': 'The first starting position on the grid, awarded to the fastest qualifier.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Qualifying',
+                'definition': 'The timed session that determines the starting order for the race.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Safety Car',
+                'definition': 'A vehicle that leads the field at reduced speed during dangerous track conditions.',
+                'category': 'Safety'
+            },
+            {
+                'term': 'Scrutineering',
+                'definition': 'The technical inspection of cars before and after sessions to ensure regulation compliance.',
+                'category': 'Regulation'
+            },
+            {
+                'term': 'Slipstream',
+                'definition': 'The aerodynamic tow created behind another car that reduces drag and can aid overtaking.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Split Time',
+                'definition': 'An intermediate lap time used to compare performance across different sections of the track.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Sectors',
+                'definition': 'Divisions of the track used to measure and compare performance throughout a lap.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Sprint Race',
+                'definition': 'A shorter race format that usually takes place on Saturday during a Grand Prix weekend.',
+                'category': 'Racing'
+            },
+            {
+                'term': 'Telemetry',
+                'definition': 'Live data transmitted from the car to the team for performance analysis and strategy decisions.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Tyre Compound',
+                'definition': 'The rubber mixture used in a tyre, which affects grip, durability, and performance.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Tyre Warmers',
+                'definition': 'Equipment used to heat tyres before they are fitted to the car for optimal grip and performance.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Virtual Safety Car',
+                'definition': 'A race neutralization system that requires drivers to slow to a prescribed delta time without a physical safety car.',
+                'category': 'Safety'
+            },
+            {
+                'term': 'Weight Distribution',
+                'definition': 'The balance of mass between the front and rear of the car, affecting handling and stability.',
+                'category': 'Technical'
+            },
+            {
+                'term': 'Yellow Flag',
+                'definition': 'A caution signal indicating danger on track and prohibiting overtaking in the affected sector.',
+                'category': 'Safety'
+            },
+            {
+                'term': 'Blue Flag',
+                'definition': 'A signal shown to a slower car to let a faster car through without impeding it.',
+                'category': 'Regulation'
+            },
+            {
+                'term': 'Black Flag',
+                'definition': 'A penalty signal ordering a driver to return to the pits and retire from the session.',
+                'category': 'Regulation'
+            },
+            {
+                'term': 'Red Flag',
+                'definition': 'A signal that the session is stopped immediately due to a serious incident or unsafe track conditions.',
+                'category': 'Safety'
+            },
+            {
+                'term': 'Slip Angle',
+                'definition': 'The angle between the direction a tyre is pointed and the actual direction the car is moving.',
+                'category': 'Technical'
+            },
         ]
 
-        for term_data in new_glossary:
-            term, created = GlossaryTerm.objects.get_or_create(
+        for term_data in new_terminology:
+            term, created = TerminologyTerm.objects.get_or_create(
                 term=term_data['term'],
                 defaults=term_data
             )

@@ -14,7 +14,7 @@ from teams.models import Team
 from circuits.models import Circuit
 from seasons.models import Season, SeasonResult
 from records.models import Record
-from glossary.models import GlossaryTerm
+from terminology.models import TerminologyTerm
 from halloffame.models import Legend
 from tyres.models import Tyre
 
@@ -93,12 +93,12 @@ def verify_records():
         print(f"    Value: {record.value}")
         print(f"    Year: {record.year}")
 
-def verify_glossary():
+def verify_terminology():
     print("\n" + "="*60)
-    print("GLOSSARY VERIFICATION")
+    print("TERMINOLOGY VERIFICATION")
     print("="*60)
-    terms = GlossaryTerm.objects.all()
-    print(f"Total Glossary Terms: {terms.count()}")
+    terms = TerminologyTerm.objects.all()
+    print(f"Total Terminology Terms: {terms.count()}")
     
     for term in terms.order_by('term'):
         print(f"\n  • {term.term}")
@@ -142,7 +142,7 @@ if __name__ == '__main__':
     verify_circuits()
     verify_seasons()
     verify_records()
-    verify_glossary()
+    verify_terminology()
     verify_hall_of_fame()
     verify_tyres()
     
